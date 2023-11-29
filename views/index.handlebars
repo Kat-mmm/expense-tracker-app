@@ -157,7 +157,7 @@
             </div>
             <button type="submit">Add Expense</button>
         </form>
-        <h4>Total Expenses: <span>R600</span></h4>
+        <h4>Total Expenses: <span>R {{grandTotal}}</span></h4>
         <h2>Expense Summary per Category</h2>
         <table>
             <thead>
@@ -167,34 +167,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Weekly</td>
-                    <td> <!-- Add your total value here --> </td>
-                </tr>
-                <tr>
-                    <td>Monthly</td>
-                    <td> <!-- Add your total value here --> </td>
-                </tr>
-                <tr>
-                    <td>Weekday</td>
-                    <td> <!-- Add your total value here --> </td>
-                </tr>
-                <tr>
-                    <td>Weekend</td>
-                    <td> <!-- Add your total value here --> </td>
-                </tr>
-                <tr>
-                    <td>Once-off</td>
-                    <td> <!-- Add your total value here --> </td>
-                </tr>
-                <tr>
-                    <td>Daily</td>
-                    <td> <!-- Add your total value here --> </td>
-                </tr>
+                {{#each totals}}
+                    <tr>
+                        <td>{{category_type}}</td>
+                        <td> {{total}}</td>
+                    </tr>
+                {{/each}}
             </tbody>
         </table>
 
         <a href="/expenses/all" class="view-exp">View all expenses</a>
     </div>
+
 </body>
 </html>

@@ -7,10 +7,11 @@ import ExpenseTracker from './services/expense-tracker-service.js';
 import ExpenseTrackerRoutes from './routes/expense-tracker-routes.js';
 import db from './config.js';
 
+//Database and Routes Setup
 let expenseTrackerService = ExpenseTracker(db);
 let expenseRoutes = ExpenseTrackerRoutes(expenseTrackerService);
 
-
+//Middleware Setup
 let app = express();
 
 app.engine('handlebars', engine({ 
@@ -30,9 +31,11 @@ app.use(session({
 
 app.use(flash());
 
+//Routes
 app.get('/', expenseRoutes.getIndex);
 app.get('/expenses/all', expenseRoutes.getAllExpenses);
 app.post('/expense/add', expenseRoutes.addExpenseRoute);
+app.post('/expense/delete/:expenseId', expenseRoutes.removeExpense);
 
 let PORT = process.env.PORT || 3000;
 

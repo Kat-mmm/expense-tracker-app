@@ -1,7 +1,37 @@
 export default function ExpenseTracker(db){
-    async function addExpense(categoryId,expense ,amount){
-        await db.none('INSERT INTO expense (category_id, expense, amount, total) VALUES($1, $2, $3, $3)', [categoryId, expense, amount]);
-    }
+    async function addExpense(categoryId, expense, amount) {
+        let totalMultiplier;
+    
+        // Determine the total multiplier based on category
+        switch (categoryId) {
+            case 1: // Monthly
+                totalMultiplier = 1;
+                break;
+            case 2: // Weekly
+                totalMultiplier = 4;
+                break;
+            case 3: // Weekday
+                totalMultiplier = 5;
+                break;
+            case 4: // Weekend
+                totalMultiplier = 2;
+                break;
+            case 5: // Once-off
+                totalMultiplier = 1;
+                break;
+            case 6: // Daily
+                totalMultiplier = 30;
+                break;
+            default:
+                totalMultiplier = 1; // Default to 1 if category is not recognized
+        }
+    
+        // Calculate the total
+        const total = amount * totalMultiplier;
+    
+        // Insert the expense into the database
+        await db.none('INSERT INTO expense (category_id, expense, amount, total) VALUES($1, $2, $3, $4)', [categoryId, expense, amount, total]);
+    }    
 
     async function allExpenses() {
         let result = await db.any(`

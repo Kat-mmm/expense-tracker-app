@@ -1,6 +1,13 @@
 export default function ExpenseTrackerRoutes(expenseService){
-    function getIndex(req, res) {
-        res.render('index');
+    async function getIndex(req, res) {
+        let totals = await expenseService.categoryTotals();
+
+        //Calculating the total expenses from all the totals
+        const grandTotal = totals.reduce((acc, expense) => {
+            return acc + parseInt(expense.total, 10);
+        }, 0);
+
+        res.render('index', {totals, grandTotal});
     }
 
     async function getAllExpenses(req, res) {
@@ -20,9 +27,17 @@ export default function ExpenseTrackerRoutes(expenseService){
         res.redirect('/');
     }
 
+    async function removeExpense(req, res) {
+        await expenseService.deleteExpense(req.params.expenseId);
+
+        res.redirect('/expenses/all')
+
+    }
+
     return{
         addExpenseRoute,
         getIndex,
-        getAllExpenses
+        getAllExpenses,
+        removeExpense
     }
 }

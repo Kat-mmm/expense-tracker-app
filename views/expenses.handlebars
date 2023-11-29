@@ -31,6 +31,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         th, td {
@@ -61,6 +62,10 @@
         .buttons-col button:hover {
             background-color: #3367d6;
         }
+
+        a{
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -84,12 +89,42 @@
                         <td>{{category_type}}</td>
                         <td>{{total}}</td>
                         <td class="buttons-col">
-                            <button data-id="{{id}}">Delete</button>
+                        <button class="delete-button" data-remove="{{expense_id}}">Delete</button>
                         </td>
                     </tr>
                 {{/each}}
             </tbody>
         </table>
+
+        <a href="/">Back to home</a>
     </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-button');
+
+        //Getting the specific button id and then using fetch to delete the expense
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', async function() {
+                const expenseId = button.dataset.remove;
+
+                console.log('Id', expenseId);
+
+               try {
+                    const response = await fetch(`/expense/delete/${expenseId}`, {
+                        method: 'POST',
+                    });
+
+                    if (response.ok) {
+                        button.closest('tr').remove();
+                    } else {
+                        console.error('Failed to delete expense');
+                    }
+                } catch (error) {
+                    console.error('Error during delete request:', error);
+                }
+            });
+        });
+    });
+</script>
 </html>
