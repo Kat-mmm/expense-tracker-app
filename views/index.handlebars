@@ -1,10 +1,200 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h4 {
+            color: #4285f4;
+            text-align: left;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #4285f4;
+            margin-top: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 18px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4285f4;
+            color: white;
+        }
+
+        .form-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .radio-btns, .radio-btns label {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+        }
+
+        button {
+            background-color: #4285f4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #3367d6;
+        }
+
+        h4 {
+            text-align: left;
+            margin-top: 40px;
+            margin-bottom: -20px;
+            color: #4285f4;
+        }
+
+        span {
+            font-weight: bold;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .view-exp{
+            color: #333;
+            margin-top: 30px;
+        }
+
+        .view-exp:hover{
+            color: #ccc;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, Kat!</h1>
+    <div class="container">
+        <h1>Expense Tracker App</h1>
+        <form action="/expense/add" method="POST">
+            <h2>Add Expense</h2>
+            <div class="form-inputs">
+                <label for="description">Description</label>
+                <input type="text" name="description" id="description" required>
+
+                <label for="amount">Amount</label>
+                <input type="number" name="amount" id="amount" required>
+            </div>
+
+            <h5>Category</h5>
+            <div class="radio-btns">
+                <label>
+                    <input type="radio" name="expenseCategory" value="1"> Weekly
+                </label>
+
+                <label>
+                    <input type="radio" name="expenseCategory" value="2"> Monthly
+                </label>
+
+                <label>
+                    <input type="radio" name="expenseCategory" value="3"> Weekday
+                </label>
+
+                <label>
+                    <input type="radio" name="expenseCategory" value="4"> Weekend
+                </label>
+
+                <label>
+                    <input type="radio" name="expenseCategory" value="5"> Once-off
+                </label>
+
+                <label>
+                    <input type="radio" name="expenseCategory" value="6"> Daily
+                </label>
+            </div>
+            <button type="submit">Add Expense</button>
+        </form>
+        <h4>Total Expenses: <span>R600</span></h4>
+        <h2>Expense Summary per Category</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Totals</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Weekly</td>
+                    <td> <!-- Add your total value here --> </td>
+                </tr>
+                <tr>
+                    <td>Monthly</td>
+                    <td> <!-- Add your total value here --> </td>
+                </tr>
+                <tr>
+                    <td>Weekday</td>
+                    <td> <!-- Add your total value here --> </td>
+                </tr>
+                <tr>
+                    <td>Weekend</td>
+                    <td> <!-- Add your total value here --> </td>
+                </tr>
+                <tr>
+                    <td>Once-off</td>
+                    <td> <!-- Add your total value here --> </td>
+                </tr>
+                <tr>
+                    <td>Daily</td>
+                    <td> <!-- Add your total value here --> </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="/expenses/all" class="view-exp">View all expenses</a>
+    </div>
 </body>
 </html>

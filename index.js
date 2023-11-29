@@ -3,6 +3,13 @@ import { engine } from 'express-handlebars';
 import bodyParser from 'body-parser';
 import flash from 'express-flash';
 import session from 'express-session';
+import ExpenseTracker from './services/expense-tracker-service.js';
+import ExpenseTrackerRoutes from './routes/expense-tracker-routes.js';
+import db from './config.js';
+
+let expenseTrackerService = ExpenseTracker(db);
+let expenseRoutes = ExpenseTrackerRoutes(expenseTrackerService);
+
 
 let app = express();
 
@@ -23,9 +30,9 @@ app.use(session({
 
 app.use(flash());
 
-app.get('/', function(req, res) {
-    res.render('index');
-})
+app.get('/', expenseRoutes.getIndex);
+app.get('/expenses/all', expenseRoutes.getAllExpenses);
+app.post('/expense/add', expenseRoutes.addExpenseRoute);
 
 let PORT = process.env.PORT || 3000;
 

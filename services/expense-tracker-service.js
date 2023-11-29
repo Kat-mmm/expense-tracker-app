@@ -3,11 +3,23 @@ export default function ExpenseTracker(db){
         await db.none('INSERT INTO expense (category_id, expense, amount, total) VALUES($1, $2, $3, $3)', [categoryId, expense, amount]);
     }
 
-    async function allExpenses(){
-        let result = db.any('SELECT * FROM expense');
-
+    async function allExpenses() {
+        let result = await db.any(`
+            SELECT
+                e.id as expense_id,
+                e.expense,
+                e.amount,
+                e.total,
+                c.id as category_id,
+                c.category_type
+            FROM
+                expense e
+            INNER JOIN
+                category c ON e.category_id = c.id
+        `);
+    
         return result;
-    }
+    }    
 
     async function expensesForCategory(categoryId){
         let result = db.any('SELECT * FROM expense WHERE category_id = $1', [categoryId]);
